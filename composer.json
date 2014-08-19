@@ -1,0 +1,25 @@
+{
+    "name": "derekchan/php-varnish",
+    "description": "PHP toolkit for working with Varnish cache",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Derek Chan",
+            "email": "derekcsy@gmail.com"
+        },
+        {
+            "name": "Tim Whitlock",
+            "homepage": "http://twitter.com/timwhitlock"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "PhpVarnish": "src/"
+        }
+    }
+}
+

@@ -13,8 +13,10 @@ if( PHP_SAPI !== 'cli' ){
 }
 
 error_reporting( E_ALL | E_STRICT );
-require 'VarnishAdminSocket.php';
 
+// Autoload files using Composer autoload
+require_once __DIR__ . '/vendor/autoload.php';
+use \PhpVarnish\VarnishAdminSocket;
 
 // open socket connection with your known host, port and version
 $Sock = new VarnishAdminSocket( 'localhost', 6082, '3.0.1' );
@@ -26,7 +28,7 @@ try {
     $Sock->connect(1);
     echo "OK\n";
 }
-catch( Exception $Ex ){
+catch( \Exception $Ex ){
     echo '**FAIL**: ', $Ex->getMessage(), "\n";
     exit(0);
 }

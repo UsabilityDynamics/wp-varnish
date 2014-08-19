@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Varnish admin socket for executing varnishadm CLI commands.
@@ -35,7 +34,7 @@
 
 
 
- 
+namespace PhpVarnish;
 
 /**
  * varnishadm connection class
@@ -104,7 +103,7 @@ class VarnishAdminSocket {
             // @todo sanity check 3.x number
         }
         else {
-            throw new Exception('Only versions 2 and 3 of Varnish are supported');
+            throw new \Exception('Only versions 2 and 3 of Varnish are supported');
         }
         $this->ban = $this->version === 3 ? 'ban' : 'purge';
     }
@@ -130,7 +129,7 @@ class VarnishAdminSocket {
         $this->fp = fsockopen( $this->host, $this->port, $errno, $errstr, $timeout );
         if( ! is_resource( $this->fp ) ){
             // error would have been raised already by fsockopen
-            throw new Exception( sprintf('Failed to connect to varnishadm on %s:%s; "%s"', $this->host, $this->port, $errstr ));
+            throw new \Exception( sprintf('Failed to connect to varnishadm on %s:%s; "%s"', $this->host, $this->port, $errstr ));
         }
         // set socket options
         stream_set_blocking( $this->fp, 1 );
@@ -139,7 +138,7 @@ class VarnishAdminSocket {
         $banner = $this->read( $code );
         if( $code === 107 ){
             if( ! $this->secret ){
-                throw new Exception('Authentication required; see VarnishAdminSocket::set_auth');
+                throw new \Exception('Authentication required; see VarnishAdminSocket::set_auth');
             }
             try {
                 $challenge = substr( $banner, 0, 32 );
@@ -147,11 +146,11 @@ class VarnishAdminSocket {
                 $banner = $this->command('auth '.$response, $code, 200 );
             }
             catch( Exception $Ex ){
-                throw new Exception('Authentication failed');
+                throw new \Exception('Authentication failed');
             }
         }
         if( $code !== 200 ){
-            throw new Exception( sprintf('Bad response from varnishadm on %s:%s', $this->host, $this->port));
+            throw new \Exception( sprintf('Bad response from varnishadm on %s:%s', $this->host, $this->port));
         }
         return $banner;
     }
@@ -166,7 +165,7 @@ class VarnishAdminSocket {
     private function write( $data ){
         $bytes = fputs( $this->fp, $data );
         if( $bytes !== strlen($data) ){
-            throw new Exception( sprintf('Failed to write to varnishadm on %s:%s', $this->host, $this->port) );
+            throw new \Exception( sprintf('Failed to write to varnishadm on %s:%s', $this->host, $this->port) );
         }
         return true;
     }    
@@ -184,7 +183,7 @@ class VarnishAdminSocket {
         $response = $this->read( $code );
         if( $code !== $ok ){
             $response = implode("\n > ", explode("\n",trim($response) ) );
-            throw new Exception( sprintf("%s command responded %d:\n > %s", $cmd, $code, $response), $code );
+            throw new \Exception( sprintf("%s command responded %d:\n > %s", $cmd, $code, $response), $code );
         }
         return $response;
     }
@@ -204,7 +203,7 @@ class VarnishAdminSocket {
             if( ! $response ){
                 $meta = stream_get_meta_data($this->fp);
                 if( $meta['timed_out'] ){
-                    throw new Exception(sprintf('Timed out reading from socket %s:%s',$this->host,$this->port));
+                    throw new \Exception(sprintf('Timed out reading from socket %s:%s',$this->host,$this->port));
                 }
             }
             if( preg_match('/^(\d{3}) (\d+)/', $response, $r) ){
@@ -214,7 +213,7 @@ class VarnishAdminSocket {
             }
         }
         if( is_null($code) ){
-            throw new Exception('Failed to get numeric code in response');
+            throw new \Exception('Failed to get numeric code in response');
         }
         $response = '';
         while ( ! feof($this->fp) && strlen($response) < $len ) {

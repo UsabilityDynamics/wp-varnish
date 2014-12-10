@@ -1,12 +1,14 @@
 <?php
 /**
-Plugin Name: WordPress Varnish Admin
-Plugin URI: http://github.com/timwhitlock/php-varnish
-Description: A plugin enabling Wordpress to purge Varnish caches via the varnishadm program
-Version: 0.1
-Author: Tim Whitlock
-Author URI: http://twitter.com/timwhitlock
-*/
+ * Plugin Name: WordPress Varnish Admin
+ * Plugin URI: https://github.com/UsabilityDynamics/wp-varnish
+ * Description: A plugin enabling Wordpress to purge Varnish caches via the varnishadm program
+ * Version: 0.1
+ * Author: Tim Whitlock
+ * Author URI: http://twitter.com/timwhitlock
+ * GitHub Plugin URI: UsabilityDynamics/wp-varnish
+ * 
+ */
 
 
 

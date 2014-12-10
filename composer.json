@@ -1,5 +1,5 @@
 {
-    "name": "usabilitydynamics/php-varnish",
+    "name": "usabilitydynamics/wp-varnish",
     "description": "WordPress plugin and PHP toolkit for working with Varnish cache",
     "type": "wordpress-plugin",
     "license": "MIT",
